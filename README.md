@@ -1,5 +1,11 @@
 # Team-2570-ReWear-Community-Clothing-Exchange
 
+Team Members :
+1.M.Shashank Reddy  E-Mail:shashankreddy417@gmail.com
+2.Kargaom Srishanth  E-Mail:kargaomsrishanth@gmail.com
+3.Jagarla Srinivas   E-mail:srinivasjagarla73@gmail.com 
+4.Laxi Prasad     E-Mail:laxmiprasad20062003@gmail.com
+
 A web-based clothing exchange platform that promotes sustainable fashion and reduces textile waste through a community-driven clothing exchange system.
 
 ## Features
