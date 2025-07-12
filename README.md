@@ -1,5 +1,5 @@
-# Team-SmartRoute-Coders-ReWear-Community-Clothing-Exchange
-Odoo Hackathon 2025 - SmartRoute Coders - Community Clothing Exchange
+# Team-2570-ReWear-Community-Clothing-Exchange
+Odoo Hackathon 2025 - Team-2570 - Community Clothing Exchange
 
 Team Members :
 1. M Shashank Reddy E-Mail :shashankreddy417@gmail.com
