@@ -10,7 +10,7 @@ Team Members:
 
 4.Laxmi Prasad     E-Mail:laxmiprasad20062003@gmail.com
 
-🚀 Overview
+🚀 Overview: <br>
 ReWear is a web-based clothing exchange platform that promotes sustainable fashion and reduces textile waste. Users can swap clothes directly or redeem them using earned points — all in a circular, community-driven environment.
 🎯 Objective
 Build a full-stack clothing exchange system with:
@@ -21,7 +21,7 @@ Build a full-stack clothing exchange system with:
 
 📊 User/Admin dashboards
 
-🌱 Sustainable economy via swaps or point redemption
+🌱 Sustainable economy via swaps or point redemption<br>
 Landing page:
 ![WhatsApp Image 2025-07-12 at 17 04 28_e4d64e11](https://github.com/user-attachments/assets/cf4c45db-57ab-440a-b336-81527ba87a91)
 Register page:
