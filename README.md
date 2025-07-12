@@ -1,4 +1,4 @@
-# ReWear - Community Clothing Exchange Platform
+# Team-2570-ReWear-Community-Clothing-Exchange
 
 A web-based clothing exchange platform that promotes sustainable fashion and reduces textile waste through a community-driven clothing exchange system.
 
