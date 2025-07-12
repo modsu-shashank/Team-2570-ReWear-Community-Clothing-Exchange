@@ -8,7 +8,7 @@ Team Members:
 
 3.Jagarla Srinivas   E-mail:srinivasjagarla73@gmail.com 
 
-4.Laxi Prasad     E-Mail:laxmiprasad20062003@gmail.com
+4.Laxmi Prasad     E-Mail:laxmiprasad20062003@gmail.com
 
 A web-based clothing exchange platform that promotes sustainable fashion and reduces textile waste through a community-driven clothing exchange system.
 
