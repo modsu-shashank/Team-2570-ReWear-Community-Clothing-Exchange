@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Admin - Items{% endblock %}
+
+{% block content %}
+<style>
+.card.shadow-sm {
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+.card.shadow-sm:hover {
+    transform: translateY(-4px);
+}
+
+.table {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(163, 105, 209, 0.08);
+    background-color: #fff;
+}
+.table th {
+    background-color: #f1f2f6;
+    font-weight: 600;
+}
+.table th, .table td {
+    vertical-align: middle;
+    padding: 12px 16px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.img-thumbnail {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    object-fit: cover;
+}
+
+.btn-success, .btn-danger {
+    border-radius: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 6px 18px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08);
+    transition: all 0.2s ease-in-out;
+}
+.btn-success {
+    background: linear-gradient(90deg, #00b894 80%, #00cec9 100%);
+    border: none;
+}
+.btn-danger {
+    background: linear-gradient(90deg, #d63031 80%, #fd5e53 100%);
+    border: none;
+}
+.btn-success:hover {
+    background: #00b894;
+    transform: scale(1.02);
+}
+.btn-danger:hover {
+    background: #d63031;
+    transform: scale(1.02);
+}
+
+h2 {
+    font-weight: 700;
+    color: #2d3436;
+}
+</style>
+
+<h2 class="mb-4"><i class="fas fa-boxes-stacked me-2 text-primary"></i>All Items</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-image me-1"></i>Image</th>
+                        <th><i class="fas fa-tag me-1"></i>Title</th>
+                        <th><i class="fas fa-user me-1"></i>Owner</th>
+                        <th><i class="fas fa-clipboard-list me-1"></i>Status</th>
+                        <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename='uploads/' + (item.images[0] if item.images else 'default-item.jpg')) }}"
+                                 style="width: 50px; height: 50px;"
+                                 class="img-thumbnail"
+                                 alt="{{ item.title }}">
+                        </td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.owner.name }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>
+                            <form action="{{ url_for('approve_item', item_id=item._id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-success me-2" onclick="return confirm('Are you sure you want to approve this item?')">
+                                    <i class="fas fa-check me-1"></i>Approve
+                                </button>
+                            </form>
+                            <form action="{{ url_for('reject_item', item_id=item._id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to reject this item?')">
+                                    <i class="fas fa-times me-1"></i>Reject
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

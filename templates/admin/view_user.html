@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}User Details - {{ user.name }}{% endblock %}
+
+{% block content %}
+<style>
+.user-card {
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+.user-card:hover {
+    transform: translateY(-4px);
+}
+
+.table {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(163, 105, 209, 0.08);
+    background-color: #fff;
+}
+
+.table th {
+    background-color: #f1f2f6;
+    font-weight: 600;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    padding: 12px 16px;
+}
+
+.btn-outline-primary, .btn-outline-danger {
+    border-radius: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 6px 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-primary {
+    border: 2px solid #00cec9;
+    color: #00cec9;
+}
+.btn-outline-primary:hover {
+    background: #00cec9;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    border: 2px solid #d63031;
+    color: #d63031;
+}
+.btn-outline-danger:hover {
+    background: #d63031;
+    color: #fff;
+}
+
+h2 {
+    font-weight: 700;
+    color: #2d3436;
+}
+
+.user-info {
+    margin-bottom: 2rem;
+}
+
+.user-info .card {
+    margin-bottom: 1.5rem;
+}
+
+.user-info .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.user-info .card-body {
+    padding: 1.5rem;
+}
+
+.user-info .card-body p {
+    margin-bottom: 0.5rem;
+}
+
+.user-info .card-body i {
+    color: #6c5ce7;
+    margin-right: 0.5rem;
+}
+
+.items-section, .swaps-section {
+    margin-top: 2rem;
+}
+
+.items-section h3, .swaps-section h3 {
+    margin-bottom: 1.5rem;
+}
+
+.items-section .card, .swaps-section .card {
+    margin-bottom: 1rem;
+}
+
+.items-section .card-img-top {
+    height: 150px;
+    object-fit: cover;
+}
+
+.swaps-section .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.swaps-section .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.swaps-section .card-body {
+    padding: 1rem;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-badge.success {
+    background-color: #00b894;
+    color: white;
+}
+
+.status-badge.warning {
+    background-color: #fdcb6e;
+    color: #2d3436;
+}
+
+.status-badge.danger {
+    background-color: #d63031;
+    color: white;
+}
+</style>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-user-circle me-2"></i>User Details</h2>
+            
+            <div class="user-info">
+                <div class="card user-card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fas fa-user"></i> Name: {{ user.name }}</p>
+                        <p><i class="fas fa-envelope"></i> Email: {{ user.email }}</p>
+                        <p><i class="fas fa-coins"></i> Points: {{ user.points }}</p>
+                        <p><i class="fas fa-user-tag"></i> Role: {{ user.role }}</p>
+                        <p><i class="fas fa-calendar"></i> Joined: {{ user.created_at.strftime('%B %d, %Y') }}</p>
+                        {% if user.location %}
+                        <p><i class="fas fa-map-marker-alt"></i> Location: {{ user.location }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="items-section">
+                <h3><i class="fas fa-tshirt me-2"></i>Items</h3>
+                <div class="row">
+                    {% for item in items %}
+                    <div class="col-md-3">
+                        <div class="card user-card">
+                            <img src="{{ url_for('static', filename='uploads/' + (item.images[0] if item.images else 'default-item.jpg')) }}"
+                                 class="card-img-top"
+                                 alt="{{ item.title }}">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ item.title }}</h6>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        {{ item.category }} • {{ item.size }} • {{ item.condition }}
+                                    </small>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Status: <span class="status-badge {% if item.status == 'available' %}success{% elif item.status == 'pending' %}warning{% else %}danger{% endif %}">
+                                            {{ item.status }}
+                                        </span>
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>This user has no items listed.
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="swaps-section">
+                <h3><i class="fas fa-exchange-alt me-2"></i>Swaps</h3>
+                {% if swaps.count() > 0 %}
+                <div class="row">
+                    {% for swap in swaps %}
+                    <div class="col-md-6">
+                        <div class="card user-card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    {% if swap.requester_id == user._id %}
+                                    Requesting swap with {{ swap.receiver.name }}
+                                    {% else %}
+                                    Receiving swap from {{ swap.requester.name }}
+                                    {% endif %}
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Status: <span class="status-badge {% if swap.status == 'pending' %}warning{% elif swap.status == 'accepted' %}success{% else %}danger{% endif %}">
+                                        {{ swap.status }}
+                                    </span>
+                                </p>
+                                <p class="card-text">
+                                    Items:
+                                    <ul class="list-unstyled">
+                                        <li>Requesting: {{ swap.requested_item.title }}</li>
+                                        <li>Offering: {{ swap.offered_item.title }}</li>
+                                    </ul>
+                                </p>
+                                <p class="card-text">
+                                    Created: {{ swap.created_at.strftime('%B %d, %Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>This user has no swap history.
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ url_for('admin_users') }}" class="btn btn-outline-primary me-2">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Users
+                </a>
+                <form action="{{ url_for('delete_user', user_id=user._id) }}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this user and all their items/swaps?')">
+                        <i class="fas fa-trash-alt me-1"></i>Delete User
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

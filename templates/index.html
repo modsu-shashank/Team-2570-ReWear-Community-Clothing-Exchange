@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}ReWear - Sustainable Clothing Exchange{% endblock %}
+
+{% block content %}
+<style>
+.hero-section {
+    padding: 60px 0;
+}
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #6c5ce7;
+}
+.hero-section .lead {
+    font-size: 1.25rem;
+    margin-bottom: 24px;
+    color: #636e72;
+}
+.hero-section .btn-primary {
+    background: linear-gradient(90deg, #6c5ce7 80%, #a369d1 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 10px 24px;
+}
+.hero-section .btn-outline-primary {
+    border: 2px solid #6c5ce7;
+    color: #6c5ce7;
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 10px 24px;
+}
+.hero-section .btn-outline-primary:hover {
+    background: #6c5ce7;
+    color: #fff;
+}
+.featured-items h2,
+.how-it-works h2 {
+    font-weight: bold;
+    color: #6c5ce7;
+    text-align: center;
+}
+.featured-items .card {
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(163, 105, 209, 0.08);
+    transition: 0.2s ease;
+}
+.featured-items .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.15);
+}
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+.item-details .badge {
+    margin-right: 5px;
+    font-size: 0.8rem;
+}
+.how-it-works .step {
+    text-align: center;
+    padding: 24px;
+    background: #f3e9ff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.08);
+    transition: 0.3s;
+}
+.how-it-works .step:hover {
+    background: #e0c3fc;
+    transform: translateY(-4px);
+}
+.how-it-works .step h3 {
+    font-weight: 600;
+    margin-top: 12px;
+    color: #6c5ce7;
+}
+.how-it-works .step p {
+    color: #636e72;
+}
+</style>
+
+<div class="hero-section mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1><i class="fas fa-leaf me-2"></i>Welcome to ReWear</h1>
+            <p class="lead">Join our community of sustainable fashion enthusiasts and reduce textile waste through clothing exchange.</p>
+            <div class="cta-buttons">
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">
+                        <i class="fas fa-user-plus me-1"></i>Start Swapping
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('add_item') }}" class="btn btn-primary btn-lg me-2">
+                        <i class="fas fa-plus me-1"></i>List an Item
+                    </a>
+                    <a href="{{ url_for('browse') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-search me-1"></i>Browse Items
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6 mt-4 mt-md-0">
+            <img src="{{ url_for('static', filename='hero1.jpg') }}" alt="Fashion Exchange" class="img-fluid rounded">
+        </div>
+    </div>
+</div>
+
+<div class="featured-items mb-5">
+    <h2 class="mb-4"><i class="fas fa-star me-2"></i>Featured Items</h2>
+    <div class="row">
+        {% for item in featured_items %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='uploads/' + (item.images[0] if item.images else 'default-item.jpg')) }}" class="card-img-top" alt="{{ item.title }}">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-tag me-1"></i>{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description[:100] }}...</p>
+                    <div class="item-details mb-2">
+                        <span class="badge bg-primary"><i class="fas fa-tags me-1"></i>{{ item.category }}</span>
+                        <span class="badge bg-secondary"><i class="fas fa-ruler me-1"></i>{{ item.size }}</span>
+                        <span class="badge bg-success"><i class="fas fa-tshirt me-1"></i>{{ item.condition }}</span>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('item_detail', item_id=item._id) }}" class="btn btn-primary">
+                        <i class="fas fa-eye me-1"></i>View Item
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="how-it-works mb-5">
+    <h2 class="mb-4"><i class="fas fa-question-circle me-2"></i>How It Works</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="step">
+                <i class="fas fa-user-plus fa-3x mb-3"></i>
+                <h3>Join the Community</h3>
+                <p>Create an account and start exploring sustainable fashion options.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="step">
+                <i class="fas fa-exchange-alt fa-3x mb-3"></i>
+                <h3>Exchange Items</h3>
+                <p>Swap your clothes directly with other users or redeem them with points.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="step">
+                <i class="fas fa-recycle fa-3x mb-3"></i>
+                <h3>Reduce Waste</h3>
+                <p>Help reduce textile waste while finding new-to-you clothing.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

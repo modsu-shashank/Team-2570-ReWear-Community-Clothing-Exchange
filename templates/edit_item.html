@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item - {{ item.title }}{% endblock %}
+
+{% block content %}
+<style>
+.form-card {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(108, 92, 231, 0.10);
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    color: #fff;
+    padding: 24px;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px solid #6c5ce7;
+}
+
+.form-control:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #00b894 80%, #00cec9 100%);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    background: #00b894;
+    transform: scale(1.03);
+}
+
+.form-label {
+    color: #6c5ce7;
+    font-weight: 600;
+}
+
+.form-check-label {
+    color: #6c5ce7;
+}
+
+.preview-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card form-card">
+                <div class="card-body">
+                    <h3 class="card-title mb-4"><i class="fas fa-edit me-2"></i>Edit Item</h3>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="title" class="form-label"><i class="fas fa-tag me-1"></i>Title</label>
+                                <input type="text" class="form-control" id="title" name="title" 
+                                       value="{{ item.title }}" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label for="category" class="form-label"><i class="fas fa-tags me-1"></i>Category</label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="" disabled>Select category</option>
+                                    <option value="tops" {% if item.category == 'tops' %}selected{% endif %}>Tops</option>
+                                    <option value="bottoms" {% if item.category == 'bottoms' %}selected{% endif %}>Bottoms</option>
+                                    <option value="dresses" {% if item.category == 'dresses' %}selected{% endif %}>Dresses</option>
+                                    <option value="outerwear" {% if item.category == 'outerwear' %}selected{% endif %}>Outerwear</option>
+                                    <option value="accessories" {% if item.category == 'accessories' %}selected{% endif %}>Accessories</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label"><i class="fas fa-align-left me-1"></i>Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required>{{ item.description }}</textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="size" class="form-label"><i class="fas fa-ruler me-1"></i>Size</label>
+                                <select class="form-control" id="size" name="size" required>
+                                    <option value="" disabled>Select size</option>
+                                    <option value="XS" {% if item.size == 'XS' %}selected{% endif %}>XS</option>
+                                    <option value="S" {% if item.size == 'S' %}selected{% endif %}>S</option>
+                                    <option value="M" {% if item.size == 'M' %}selected{% endif %}>M</option>
+                                    <option value="L" {% if item.size == 'L' %}selected{% endif %}>L</option>
+                                    <option value="XL" {% if item.size == 'XL' %}selected{% endif %}>XL</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label for="condition" class="form-label"><i class="fas fa-star me-1"></i>Condition</label>
+                                <select class="form-control" id="condition" name="condition" required>
+                                    <option value="" disabled>Select condition</option>
+                                    <option value="new" {% if item.condition == 'new' %}selected{% endif %}>New</option>
+                                    <option value="like_new" {% if item.condition == 'like_new' %}selected{% endif %}>Like New</option>
+                                    <option value="good" {% if item.condition == 'good' %}selected{% endif %}>Good</option>
+                                    <option value="fair" {% if item.condition == 'fair' %}selected{% endif %}>Fair</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-image me-1"></i>Current Images</label>
+                            <div class="row">
+                                {% for image in item.images %}
+                                <div class="col-4 mb-3">
+                                    <img src="{{ url_for('static', filename='uploads/' + image) }}" 
+                                         class="preview-image" 
+                                         alt="Current item image">
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="new_images" class="form-label"><i class="fas fa-upload me-1"></i>Upload New Images</label>
+                            <input type="file" class="form-control" id="new_images" name="new_images" accept="image/*" multiple>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light ms-2">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

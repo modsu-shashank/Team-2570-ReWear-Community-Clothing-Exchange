@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Login - ReWear{% endblock %}
+
+{% block content %}
+<style>
+body {
+    background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+.card {
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(108, 92, 231, 0.1), 0 1.5px 5px rgba(163, 105, 209, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.card-title {
+    font-weight: bold;
+    color: #6c5ce7;
+}
+
+.form-control:focus {
+    border-color: #a369d1;
+    box-shadow: 0 0 0 0.15rem rgba(163, 105, 209, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #6c5ce7 80%, #a369d1 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08);
+    padding: 10px;
+}
+.btn-primary:hover {
+    background: #5a4ed4;
+}
+
+.text-center p a {
+    color: #6c5ce7;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.input-group-text {
+    background-color: #f3e9ff;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    color: #6c5ce7;
+    font-size: 1.1rem;
+}
+</style>
+
+<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm p-4">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Login to ReWear</h2>
+
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

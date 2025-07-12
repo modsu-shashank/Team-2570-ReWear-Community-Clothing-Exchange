@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Register - ReWear{% endblock %}
+
+{% block content %}
+<style>
+body {
+    background: linear-gradient(120deg, #fbc2eb 0%, #a6c1ee 100%);
+}
+.card {
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(251, 194, 235, 0.12), 0 1.5px 5px 0 rgba(166, 193, 238, 0.08);
+}
+.card-title {
+    font-weight: bold;
+    color: #a369d1;
+}
+.form-label {
+    font-weight: 500;
+    color: #6c5ce7;
+}
+.form-control {
+    border-radius: 12px;
+}
+.form-control:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.08);
+}
+.btn-primary {
+    background: linear-gradient(90deg, #a369d1 80%, #6c5ce7 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(163, 105, 209, 0.08);
+    transition: background 0.3s ease;
+}
+.btn-primary:hover {
+    background: #6c5ce7;
+}
+.form-label i {
+    margin-right: 6px;
+}
+</style>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">
+                    <i class="fas fa-user-plus me-2"></i>Create Your ReWear Account
+                </h2>
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            <i class="fas fa-user"></i> Full Name
+                        </label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Email
+                        </label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">
+                            <i class="fas fa-lock"></i> Confirm Password
+                        </label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="form-label">
+                            <i class="fas fa-map-marker-alt"></i> Location (Optional)
+                        </label>
+                        <input type="text" class="form-control" id="location" name="location">
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary py-2">
+                            <i class="fas fa-user-check me-2"></i>Register
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p>
+                            Already have an account?
+                            <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt me-1"></i>Login here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

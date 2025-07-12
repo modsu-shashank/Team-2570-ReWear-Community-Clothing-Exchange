@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Add Item - ReWear{% endblock %}
+
+{% block content %}
+<style>
+.card {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(108, 92, 231, 0.10), 0 1.5px 5px 0 rgba(163, 105, 209, 0.08);
+    background-color: #fff;
+    transition: transform 0.2s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-3px);
+}
+.card-title {
+    color: #6c5ce7;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+.form-label {
+    font-weight: 600;
+    color: #6c5ce7;
+}
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: #a369d1;
+    box-shadow: 0 0 0 0.15rem rgba(163, 105, 209, 0.15);
+}
+textarea.form-control {
+    resize: vertical;
+}
+input[type="file"] {
+    background: #f8f2ff;
+    border: 1px solid #dedede;
+    border-radius: 8px;
+    padding: 10px;
+}
+.form-text {
+    color: #888;
+    font-size: 0.85rem;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #6c5ce7 80%, #a369d1 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.08);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.btn-primary:hover {
+    background: #5a4ed4;
+    transform: scale(1.02);
+}
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.4rem;
+    }
+}
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4"><i class="fas fa-tshirt me-2"></i>Add New Item</h2>
+
+                <form method="POST" action="{{ url_for('add_item') }}" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="title" class="form-label"><i class="fas fa-heading me-1"></i>Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label"><i class="fas fa-list-alt me-1"></i>Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Men">Men's Clothing</option>
+                                <option value="Women">Women's Clothing</option>
+                                <option value="Kids">Kids' Clothing</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="type" class="form-label"><i class="fas fa-tag me-1"></i>Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="Tops">Tops</option>
+                                <option value="Bottoms">Bottoms</option>
+                                <option value="Dresses">Dresses</option>
+                                <option value="Accessories">Accessories</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="size" class="form-label"><i class="fas fa-ruler-combined me-1"></i>Size</label>
+                            <input type="text" class="form-control" id="size" name="size" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="condition" class="form-label"><i class="fas fa-check-circle me-1"></i>Condition</label>
+                        <select class="form-select" id="condition" name="condition" required>
+                            <option value="">Select Condition</option>
+                            <option value="New">New</option>
+                            <option value="Like New">Like New</option>
+                            <option value="Gently Used">Gently Used</option>
+                            <option value="Used">Used</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label"><i class="fas fa-align-left me-1"></i>Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tags" class="form-label"><i class="fas fa-hashtag me-1"></i>Tags</label>
+                        <input type="text" class="form-control" id="tags" name="tags" placeholder="e.g., casual, cotton, trendy">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="images" class="form-label"><i class="fas fa-image me-1"></i>Item Images</label>
+                        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*" required>
+                        <div class="form-text">Upload multiple images to showcase your item from different angles.</div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle me-2"></i>Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

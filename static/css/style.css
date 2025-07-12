@@ -1,0 +1,111 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9fc;
+    color: #2d3436;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+.fa, .fas, .far, .fal, .fad, .fab {
+    margin-right: 0.4em;
+    vertical-align: middle;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #434cce, #185a9d);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: #ffffff !important;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #f1f1f1 !important;
+    font-weight: 500;
+    margin-right: 0.75rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+    text-decoration: underline;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.alert {
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+main.container {
+    min-height: 75vh;
+    padding-bottom: 20px;
+}
+
+.footer {
+    background-color: #f1f2f6;
+    border-top: 1px solid #dfe4ea;
+}
+
+.footer .text-muted {
+    font-size: 0.9rem;
+    color: #636e72 !important;
+}
+
+.btn-primary, .btn-outline-primary {
+    border-radius: 25px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #00b894 80%, #00cec9 100%);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #00b894;
+    transform: scale(1.02);
+}
+
+.btn-outline-primary {
+    color: #00b894;
+    border: 2px solid #00b894;
+}
+
+.btn-outline-primary:hover {
+    background: #00b894;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .nav-link {
+        padding: 10px 0;
+    }
+}

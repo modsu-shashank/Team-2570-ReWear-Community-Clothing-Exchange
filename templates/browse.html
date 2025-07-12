@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Items - ReWear{% endblock %}
+
+{% block content %}
+<style>
+.filters-sidebar {
+    background: #f3e9ff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(163, 105, 209, 0.08);
+    padding: 20px 18px;
+}
+.filters-sidebar .form-label {
+    color: #a369d1;
+    font-weight: 500;
+}
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #a369d1;
+    box-shadow: 0 0 0 0.15rem rgba(163, 105, 209, 0.15);
+}
+.btn-primary {
+    background: linear-gradient(90deg, #6c5ce7 80%, #a369d1 100%);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 10px 16px;
+}
+.btn-primary:hover {
+    background: #5a4ed4;
+}
+.btn-outline-primary {
+    color: #6c5ce7;
+    border: 2px solid #6c5ce7;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.btn-outline-primary:hover {
+    background: #6c5ce7;
+    color: #fff;
+}
+.item-card {
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(108, 92, 231, 0.08);
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+}
+.item-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 8px 24px 0 rgba(108, 92, 231, 0.15);
+}
+.item-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+.card-title {
+    font-weight: bold;
+    color: #2d3436;
+}
+.card-text {
+    font-size: 0.9rem;
+    color: #636e72;
+}
+.badge.bg-success {
+    background-color: #00b894 !important;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+</style>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-4">
+        <div class="filters-sidebar">
+            <h5 class="mb-3"><i class="fas fa-sliders-h me-2"></i>Filters</h5>
+            <form method="GET" action="{{ url_for('browse') }}">
+                <div class="mb-3">
+                    <label for="category" class="form-label"><i class="fas fa-list me-1"></i>Category</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="">All Categories</option>
+                        <option value="Men">Men's Clothing</option>
+                        <option value="Women">Women's Clothing</option>
+                        <option value="Kids">Kids' Clothing</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="size" class="form-label"><i class="fas fa-ruler-combined me-1"></i>Size</label>
+                    <input type="text" class="form-control" id="size" name="size" placeholder="e.g., M, L, 32">
+                </div>
+
+                <div class="mb-3">
+                    <label for="condition" class="form-label"><i class="fas fa-check-circle me-1"></i>Condition</label>
+                    <select class="form-select" id="condition" name="condition">
+                        <option value="">Any Condition</option>
+                        <option value="New">New</option>
+                        <option value="Like New">Like New</option>
+                        <option value="Gently Used">Gently Used</option>
+                        <option value="Used">Used</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tags" class="form-label"><i class="fas fa-tags me-1"></i>Tags</label>
+                    <input type="text" class="form-control" id="tags" name="tags" placeholder="comma separated">
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-filter me-1"></i>Apply Filters
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            {% for item in items %}
+            <div class="col-md-4 mb-4">
+                <div class="card item-card h-100">
+                    <img src="{{ url_for('static', filename='uploads/' + (item.images[0] if item.images else 'default-item.jpg')) }}"
+                         class="card-img-top"
+                         alt="{{ item.title }}">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title"><i class="fas fa-tshirt me-1"></i>{{ item.title }}</h6>
+                        <p class="card-text mb-1">{{ item.category }} • {{ item.size }}</p>
+                        <span class="badge bg-success align-self-start mb-2">{{ item.condition }}</span>
+                        <a href="{{ url_for('item_detail', item_id=item._id) }}" class="btn btn-outline-primary mt-auto">
+                            <i class="fas fa-eye me-1"></i>View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle me-2"></i>No items found matching the selected criteria.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

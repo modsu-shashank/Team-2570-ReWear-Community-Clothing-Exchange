@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<style>
+.notification-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.10);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    background: #fff;
+}
+.notification-card:hover {
+    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.15);
+    transform: translateY(-4px);
+}
+.card-title {
+    font-weight: 600;
+    color: #6c5ce7;
+    margin-bottom: 6px;
+}
+.notification-time {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.notification-icon {
+    font-size: 1.4rem;
+    margin-right: 12px;
+    transition: transform 0.3s;
+}
+.notification-icon:hover {
+    transform: scale(1.2);
+}
+.notification-status {
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+}
+.status-read {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+.status-unread {
+    background-color: #00b894;
+    color: #fff;
+}
+</style>
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary fw-bold"><i class="fas fa-bell me-2"></i>Notifications</h2>
+
+    {% if notifications_count == 0 %}
+    <div class="text-center py-5">
+        <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">No notifications yet</h4>
+        <p class="text-muted">Stay active to receive updates about your items and swaps.</p>
+    </div>
+    {% else %}
+    <div class="row">
+        {% for notification in notifications %}
+        <div class="col-md-12 mb-3">
+            <div class="notification-card d-flex align-items-start justify-content-between">
+                <div class="d-flex flex-grow-1">
+                    <div class="notification-icon mt-1">
+                        {% if notification.type == 'swap_request' %}
+                        <i class="fas fa-exchange-alt text-primary"></i>
+                        {% elif notification.type == 'swap_approved' %}
+                        <i class="fas fa-check-circle text-success"></i>
+                        {% elif notification.type == 'swap_rejected' %}
+                        <i class="fas fa-times-circle text-danger"></i>
+                        {% elif notification.type == 'item_approved' %}
+                        <i class="fas fa-tshirt text-success"></i>
+                        {% else %}
+                        <i class="fas fa-info-circle text-secondary"></i>
+                        {% endif %}
+                    </div>
+                    <div class="ms-3 text-wrap">
+                        <h5 class="card-title">{{ notification.message }}</h5>
+                        <div class="notification-time"><i class="far fa-clock me-1"></i>{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+                    </div>
+                </div>
+                <div class="notification-status status-{{ 'unread' if not notification.read else 'read' }}">
+                    {{ 'Unread' if not notification.read else 'Read' }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

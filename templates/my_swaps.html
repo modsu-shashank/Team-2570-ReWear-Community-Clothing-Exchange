@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}My Swaps{% endblock %}
+
+{% block content %}
+<style>
+.swap-card {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.10);
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.swap-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.15);
+}
+
+.swap-card .card-title {
+    color: #6c5ce7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+
+.swap-status {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.status-pending {
+    background-color: #ffd700;
+    color: #000;
+}
+.status-approved {
+    background-color: #00b894;
+    color: #fff;
+}
+.status-rejected {
+    background-color: #d63031;
+    color: #fff;
+}
+.status-completed {
+    background-color: #43cea2;
+    color: #fff;
+}
+
+.section-heading {
+    color: #6c5ce7;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+}
+</style>
+
+<div class="container mt-4">
+    <h2 class="section-heading"><i class="fas fa-paper-plane me-2"></i>My Swap Requests</h2>
+    <div class="row">
+        {% if requested_swaps %}
+            {% for swap in requested_swaps %}
+            <div class="col-md-6 mb-4">
+                <div class="swap-card">
+                    <h5 class="card-title"><i class="fas fa-tshirt me-2"></i>{{ swap.item.title }}</h5>
+                    <p><i class="fas fa-user me-1"></i><strong>Requested From:</strong> {{ swap.receiver.name }}</p>
+                    <p><i class="fas fa-info-circle me-1"></i><strong>Status:</strong>
+                        <span class="swap-status status-{{ swap.status.lower() }}">{{ swap.status }}</span>
+                    </p>
+                    <p><i class="fas fa-exchange-alt me-1"></i><strong>Type:</strong> {{ swap.type }}</p>
+                    <p class="mb-0"><i class="fas fa-calendar-alt me-1"></i><strong>Date:</strong> {{ swap.created_at.strftime('%Y-%m-%d') }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle me-2"></i>You haven't requested any swaps yet.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <h2 class="section-heading mt-5"><i class="fas fa-inbox me-2"></i>Received Swap Requests</h2>
+    <div class="row">
+        {% if received_swaps %}
+            {% for swap in received_swaps %}
+            <div class="col-md-6 mb-4">
+                <div class="swap-card">
+                    <h5 class="card-title"><i class="fas fa-tshirt me-2"></i>{{ swap.item.title }}</h5>
+                    <p><i class="fas fa-user me-1"></i><strong>Requested By:</strong> {{ swap.requester.name }}</p>
+                    <p><i class="fas fa-info-circle me-1"></i><strong>Status:</strong>
+                        <span class="swap-status status-{{ swap.status.lower() }}">{{ swap.status }}</span>
+                    </p>
+                    <p><i class="fas fa-exchange-alt me-1"></i><strong>Type:</strong> {{ swap.type }}</p>
+                    <p class="mb-0"><i class="fas fa-calendar-alt me-1"></i><strong>Date:</strong> {{ swap.created_at.strftime('%Y-%m-%d') }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <i class="fas fa-exclamation-circle me-2"></i>No one has requested swaps from you yet.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
